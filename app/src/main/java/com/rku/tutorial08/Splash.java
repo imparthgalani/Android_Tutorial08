@@ -14,17 +14,7 @@ public class Splash extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
-     /* Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(Splash.this,Login.class);
-                startActivity(intent);
-                finish();
-            }
-        };
-        timer.schedule(timerTask,2000);*/
+        this.setTitle("");
 
         new Timer().schedule(new TimerTask() {
             @Override

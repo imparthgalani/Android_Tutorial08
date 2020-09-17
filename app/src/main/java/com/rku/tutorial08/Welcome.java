@@ -31,7 +31,7 @@ public class Welcome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        this.setTitle("Welcome");
+
 
         preferences = getSharedPreferences("college", MODE_PRIVATE);
         editor = preferences.edit();

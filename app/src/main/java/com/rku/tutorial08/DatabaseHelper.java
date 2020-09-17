@@ -16,9 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE = "college";
     public static final String TABLE = "student";
-    /*public static final String COL_1 = "ID";
-    public static final String COL_2 = "USERNAME";
-    public static final String COL_3 = "PASSWORD";*/
+
     public static final String COL_1 = "ID";
     public static final String COL_2 = "FIRSTNAME";
     public static final String COL_3 = "LASTNAME";
@@ -48,13 +46,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COL_9 + " TEXT)";
         Log.i("sql", sql);
         sqLiteDatabase.execSQL(sql);
-
-       /* String sql = "create table " + TABLE + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,USERNAME TEXT,PASSWORD TEXT)";
-        Log.i("sql", sql);
-        sqLiteDatabase.execSQL(sql);*/
-
-        /* sqLiteDatabase.execSQL("create table " + TABLE +" (ID INTEGER PRIMARY KEY AUTOINCREMENT,NAME TEXT,SURNAME TEXT,MARKS INTEGER)");*/
-
     }
 
     @Override
@@ -80,8 +71,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // insert into table_name (name,city,branch) values ('abc','rjt','ce')
         return (db.insert(TABLE, null, values) != -1);
 
-        /*long result = db.insert(TABLE, null, values);
-        return (result == -1) ? false : true;*/
     }
 
     public boolean duplicate_user(String username) {
@@ -110,22 +99,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null
         );
         return ((cursor != null && cursor.getCount() > 0) ? true : false);
-
-      /*  String[] columns = {COL_1};
-        SQLiteDatabase db = getWritableDatabase();
-
-        String selection = COL_2 + "=?" + " and " + COL_3 + "=?";
-        String[] selectionArgs = {username, password};
-
-        Cursor cursor = db.query(TABLE, columns, selection, selectionArgs, null, null, null);
-        int count = cursor.getCount();
-        cursor.close();
-        db.close();
-
-        if (count > 0)
-            return true;
-        else
-            return false;*/
     }
 
     public ArrayList<String> getUserList() {
