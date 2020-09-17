@@ -29,8 +29,14 @@ public class UserDetail extends AppCompatActivity {
 
         Cursor cursor = helper.getSingleUserDetail(userdata);
         cursor.moveToFirst();
-        userAllData +="Username : "+cursor.getString(1);
-        userAllData +="\nPassword : "+cursor.getString(2);
+        userAllData +="FirstName : "+cursor.getString(1);
+        userAllData +="\nLastName : "+cursor.getString(2);
+        userAllData +="\nUsername : "+cursor.getString(3);
+        userAllData +="\nPassword : "+cursor.getString(4);
+        userAllData +="\nBranch : "+cursor.getString(5);
+        userAllData +="\nGender : "+cursor.getString(6);
+        userAllData +="\nCity : "+cursor.getString(7);
+        userAllData +="\nStatus : "+cursor.getString(8);
 
         txtUserDetail.setText(userAllData);
 

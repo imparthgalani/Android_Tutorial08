@@ -5,16 +5,24 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class RegistrationForm extends AppCompatActivity {
-    EditText  edtUsername, edtPassword;
-
-
-    DatabaseHelper databaseHelper;
+    EditText edtFirstName,edtLastName,edtRUsername,edtRPassword;
+    Switch branch;
+    Spinner city;
+    CheckBox agree;
+    RadioGroup rdb_group;
+    RadioButton rdb_select;
+    DatabaseHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,26 +30,48 @@ public class RegistrationForm extends AppCompatActivity {
         setContentView(R.layout.activity_registrationform);
         this.setTitle("Registration Form");
 
-        databaseHelper = new DatabaseHelper(this);
+        helper = new DatabaseHelper(this);
 
-        edtUsername = findViewById(R.id.edtUsername);
-        edtPassword = findViewById(R.id.edtPassword);
+        edtFirstName = findViewById(R.id.edtFirstName);
+        edtLastName = findViewById(R.id.edtLastName);
+        edtRUsername = findViewById(R.id.edtRUsername);
+        edtRPassword = findViewById(R.id.edtRPassword);
+        branch       = findViewById(R.id.branch);
+        rdb_group    = findViewById(R.id.rdb_group);
+        city         = findViewById(R.id.city);
+        agree        = findViewById(R.id.agree);
 
     }
 
     public void saveRecord(View view) {
-        String ValUsername,ValPassword;
+        String ValFirstName,ValLastName,ValUsername,ValPassword,ValBranch,ValGender,ValCity,ValAgree;
 
 
-        ValUsername = edtUsername.getText().toString();
-        ValPassword = edtPassword.getText().toString();
+        ValFirstName = edtFirstName.getText().toString();
+        ValLastName  = edtLastName.getText().toString();
+        ValUsername  = edtRUsername.getText().toString();
+        ValPassword  = edtRPassword.getText().toString();
+        ValBranch    = branch.getText().toString();
+        int id       = rdb_group.getCheckedRadioButtonId();
+        rdb_select   = findViewById(id);
+        ValGender    = rdb_select.getText().toString();
+        ValCity      = city.getSelectedItem().toString();
 
 
         /*------------------- Validation Start ---------------------*/
 
+        if (TextUtils.isEmpty(ValFirstName)) {
+            edtFirstName.setError("Please Enter FirstName");
+            return;
+        }
+
+        if (TextUtils.isEmpty(ValLastName)) {
+            edtLastName.setError("Please Enter LastName");
+            return;
+        }
 
         if (TextUtils.isEmpty(ValUsername)) {
-            edtUsername.setError("Please Enter Email Address");
+            edtRUsername.setError("Please Enter Email Address");
             return;
         }
 
@@ -51,26 +81,57 @@ public class RegistrationForm extends AppCompatActivity {
         }
 
         if (TextUtils.isEmpty(ValPassword)) {
-            edtPassword.setError("Password is Required.");
+            edtRPassword.setError("Password is Required.");
             return;
         }
 
         if (ValPassword.length() < 6) {
-            edtPassword.setError("Password Must be >= 6 Characters");
+            edtRPassword.setError("Password Must be >= 6 Characters");
             return;
+        }
+
+        if(ValCity.equals("Select City"))
+        {
+            Toast.makeText(RegistrationForm.this, "Please Select City", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(branch.isChecked()) {
+            ValBranch = "IT";
+        }else{
+            ValBranch = "CE";
+        }
+
+        if(agree.isChecked()) {
+            ValAgree = "Active";
+        }else{
+            ValAgree = "Inactive";
         }
 
 
         /*------------------- Validation End ---------------------*/
 
-        if (databaseHelper.insertData(ValUsername,ValPassword)) {
-            Toast.makeText(this, "User Created", Toast.LENGTH_SHORT).show();
-            edtUsername.setText("");
-            edtPassword.setText("");
+        if (helper.duplicate_user(ValUsername)){
+            edtRUsername.requestFocus();
+            edtRUsername.setError("Username Already Exits");
+            return;
+        }else {
 
+            Boolean res = helper.insertData(ValFirstName,ValLastName,ValUsername,ValPassword,ValBranch,ValGender,ValCity,ValAgree);
+
+            if (res == true) {
+                Toast.makeText(this, "User Created", Toast.LENGTH_SHORT).show();
+                edtFirstName.setText("");
+                edtLastName.setText("");
+                edtRUsername.setText("");
+                edtRPassword.setText("");
+                Intent intent = new Intent(RegistrationForm.this, Welcome.class);
+                startActivity(intent);
+
+            } else {
+                Toast.makeText(RegistrationForm.this, "Something is Wrong", Toast.LENGTH_SHORT).show();
+            }
         }
-        Intent intent = new Intent(RegistrationForm.this, Login.class);
-        startActivity(intent);
     }
 
     public void btnLogin(View view) {

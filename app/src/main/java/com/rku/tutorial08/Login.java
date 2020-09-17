@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Login extends AppCompatActivity {
 
 
-    EditText edtUsername, edtPassword;
+    EditText edtLUsername, edtLPassword;
     Button btnLogin;
     DatabaseHelper helper;
 
@@ -31,8 +31,8 @@ public class Login extends AppCompatActivity {
 
         helper = new DatabaseHelper(this);
 
-        edtUsername = findViewById(R.id.edtUsername);
-        edtPassword = findViewById(R.id.edtPassword);
+        edtLUsername = findViewById(R.id.edtLUsername);
+        edtLPassword = findViewById(R.id.edtLPassword);
         btnLogin    = findViewById(R.id.btnLogin);
 
         preferences = getSharedPreferences("college", MODE_PRIVATE);
@@ -48,32 +48,32 @@ public class Login extends AppCompatActivity {
         }
 
         String username = preferences.getString("username", "");
-        edtUsername.setText(username);
+        edtLUsername.setText(username);
         final String password = preferences.getString("password", "");
-        edtPassword.setText(password);
+        edtLPassword.setText(password);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String ValUsername = edtUsername.getText().toString();
-                String ValPassword = edtPassword.getText().toString();
+                String ValUsername = edtLUsername.getText().toString();
+                String ValPassword = edtLPassword.getText().toString();
                 String ValLogin = btnLogin.getText().toString();
                 Log.i("Login Screen", "In Onclick");
 
                 /*------------------- Validation Start ---------------------*/
 
                 if (!Patterns.EMAIL_ADDRESS.matcher(ValUsername).matches()) {
-                    edtUsername.setError("Email address format is not valid");
+                    edtLUsername.setError("Email address format is not valid");
                     return;
                 }
 
                 if (TextUtils.isEmpty(ValPassword)) {
-                    edtPassword.setError("Password is Required.");
+                    edtLPassword.setError("Password is Required.");
                     return;
                 }
 
                 if (ValPassword.length() < 6) {
-                    edtPassword.setError("Password Must be >= 6 Characters");
+                    edtLPassword.setError("Password Must be >= 6 Characters");
                     return;
                 }
 

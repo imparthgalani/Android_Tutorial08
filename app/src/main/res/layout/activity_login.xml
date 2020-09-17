@@ -46,7 +46,7 @@
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="73dp"
                 android:layout_marginTop="24dp"
                 android:orientation="horizontal"
                 android:padding="10dp">
@@ -62,7 +62,7 @@
                     android:textSize="20sp" />
 
                 <EditText
-                    android:id="@+id/edtUsername"
+                    android:id="@+id/edtLUsername"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -91,7 +91,7 @@
                     android:textSize="20sp" />
 
                 <EditText
-                    android:id="@+id/edtPassword"
+                    android:id="@+id/edtLPassword"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
